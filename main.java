@@ -3,7 +3,7 @@ public class main {
 
     public static void main(String[] args) {
 
-        tugas.User user = new tugas.User("ntr");
+        tugas.User user = new tugas.User("opik");
 
         tugas.Ticket ticket = new tugas.BusinessTicket("Argo ngawi", 150000);
 
