@@ -81,8 +81,8 @@ public class tugas {
 
         static {
             trains.add(new BusinessTicket("Argo Ngawi", 150000));
-            trains.add(new EconomyTicket("Matarmaja", 100000));
-            trains.add(new BusinessTicket("Bima", 200000));
+            trains.add(new EconomyTicket("kargo bandung", 100000));
+            trains.add(new BusinessTicket("kargo papua", 200000));
         }
 
         public static void showTrains() {
