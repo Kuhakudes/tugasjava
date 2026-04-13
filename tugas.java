@@ -6,10 +6,16 @@ public class tugas {
     static abstract class Ticket {
         private String trainName;
         private double basePrice;
+        private String origin;
+        private String destination;
+        private String duration;
 
-        public Ticket(String trainName, double basePrice) {
+        public Ticket(String trainName, double basePrice, String origin, String destination, String duration) {
             this.trainName = trainName;
             this.basePrice = basePrice;
+            this.origin = origin;
+            this.destination = destination;
+            this.duration = duration;
         }
 
         public String getTrainName() {
@@ -20,13 +26,25 @@ public class tugas {
             return basePrice;
         }
 
+        public String getOrigin() {
+            return origin;
+        }
+
+        public String getDestination() {
+            return destination;
+        }
+
+        public String getDuration() {
+            return duration;
+        }
+
         public abstract double calculatePrice();
     }
 
     // ===== INHERITANCE =====
     static class EconomyTicket extends Ticket {
-        public EconomyTicket(String trainName, double basePrice) {
-            super(trainName, basePrice);
+        public EconomyTicket(String trainName, double basePrice, String origin, String destination, String duration) {
+            super(trainName, basePrice, origin, destination, duration);
         }
 
         public double calculatePrice() {
@@ -35,8 +53,8 @@ public class tugas {
     }
 
     static class BusinessTicket extends Ticket {
-        public BusinessTicket(String trainName, double basePrice) {
-            super(trainName, basePrice);
+        public BusinessTicket(String trainName, double basePrice, String origin, String destination, String duration) {
+            super(trainName, basePrice, origin, destination, duration);
         }
 
         public double calculatePrice() {
@@ -74,27 +92,30 @@ public class tugas {
         }
     }
 
-    // ===== DATABASE KERETA (LIST biar bisa pakai nomor) =====
+    // ===== DATABASE KERETA =====
     static class TrainDatabase {
 
         private static List<Ticket> trains = new ArrayList<>();
 
         static {
-            trains.add(new BusinessTicket("Argo Ngawi", 150000));
-            trains.add(new EconomyTicket("kargo bandung", 100000));
-            trains.add(new BusinessTicket("kargo papua", 200000));
+            trains.add(new BusinessTicket("Argo Ngawi", 150000, "Jakarta", "Ngawi", "5 Jam"));
+            trains.add(new EconomyTicket("Matarmaja", 100000, "Malang", "Jakarta", "12 Jam"));
+            trains.add(new BusinessTicket("Bima", 200000, "Surabaya", "Jakarta", "10 Jam"));
         }
 
         public static void showTrains() {
             System.out.println("\n=== DAFTAR KERETA ===");
             for (int i = 0; i < trains.size(); i++) {
-                System.out.println((i + 1) + ". " + trains.get(i).getTrainName());
+                Ticket t = trains.get(i);
+                System.out.println((i + 1) + ". " + t.getTrainName() +
+                        " | " + t.getOrigin() + " -> " + t.getDestination() +
+                        " | " + t.getDuration());
             }
         }
 
         public static Ticket getTicketByIndex(int index) {
             if (index < 1 || index > trains.size()) {
-                return null;
+                throw new IllegalArgumentException("Pilihan kereta tidak valid!");
             }
             return trains.get(index - 1);
         }
@@ -118,6 +139,8 @@ public class tugas {
             System.out.println("\n=== DETAIL TRANSAKSI ===");
             System.out.println("Nama User   : " + user.getName());
             System.out.println("Kereta      : " + ticket.getTrainName());
+            System.out.println("Rute        : " + ticket.getOrigin() + " -> " + ticket.getDestination());
+            System.out.println("Durasi      : " + ticket.getDuration());
             System.out.println("Total Harga : Rp " + price);
 
             payment.pay(price);
